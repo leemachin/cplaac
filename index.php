@@ -4,6 +4,7 @@ require_once __DIR__.'/vendor/autoload.php';
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Translation\Loader\YamlFileLoader;
 
 $app = new Silex\Application;
 
@@ -29,19 +30,15 @@ $user->session_begin();
 $auth->acl($user->data);
 $user->setup();
 
-$app->register(new Silex\Provider\TwigServiceProvider(), array(
-  'twig.path'       => __DIR__.'/views',
-));
-
-$app->register(new Silex\Provider\DoctrineServiceProvider(), array(
-  'db.options' => array(
+$app->register(new Silex\Provider\DoctrineServiceProvider(), [
+  'db.options' => [
     'driver'    => 'pdo_mysql',
     'host'      => $app['config']['database']['host'],
     'dbname'    => $app['config']['database']['name'],
     'user'      => $app['config']['database']['user'],
     'password'  => $app['config']['database']['pass']
-  ),
-));
+  ],
+]);
 
 $session_config = array();
 if (isset($app['config']['app']['session_path'])) {
@@ -50,6 +47,22 @@ if (isset($app['config']['app']['session_path'])) {
 
 $app->register(new Silex\Provider\SessionServiceProvider(), $session_config);
 $app['session']->start();
+
+$app->register(new Silex\Provider\FormServiceProvider());
+$app->register(new Silex\Provider\ValidatorServiceProvider());
+$app->register(new Silex\Provider\TranslationServiceProvider());
+
+$app->register(new Silex\Provider\TwigServiceProvider(), [
+  'twig.path' => __DIR__.'/views',
+  'twig.options' => ['autoescape' => true],
+  'twig.form.templates' => ['form_div_layout.html.twig', 'form/fields.html.twig']
+]);
+
+$app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
+  $translator->addLoader('yaml', new YamlFileLoader());
+  $translator->addResource('yaml', __DIR__.'/locales/en.yml', 'en');
+  return $translator;
+}));
 
 $app['twig']->addGlobal('Maths', new Cplaac\TwigExtensions\Maths());
 $app['twig']->addGlobal('Filters', new Cplaac\TwigExtensions\Filters());
