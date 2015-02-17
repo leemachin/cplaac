@@ -103,7 +103,7 @@ $app['user'] = function() use ($app) {
 };
 
 $app['requireAuth'] = $app->protect(function(Request $request) use ($app) {
-  if (!$app['user']) {
+  if (!$app['debug'] && !$app['user']) {
     $app['session']->set('last_page', $app['current_page']);
     return new RedirectResponse('/login');
   }
