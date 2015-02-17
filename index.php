@@ -11,6 +11,14 @@ $app = new Silex\Application;
 $app['config'] = parse_ini_file(__DIR__.'/.config.ini', true);
 $app['debug'] = $app['config']['app']['debug'];
 
+// serve static files in debug mode
+if ($app['debug'] == true) {
+  $filename = __DIR__.preg_replace('#(\?.*)$#', '', $_SERVER['REQUEST_URI']);
+  if (php_sapi_name() === 'cli-server' && is_file($filename)) {
+    return false;
+  }
+}
+
 // Fudge authentication with phpbb
 define('IN_PHPBB', true);
 $phpbb_root_path = $app['config']['forum']['path'];
