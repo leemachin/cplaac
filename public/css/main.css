@@ -82,6 +82,11 @@ textarea {
   height: 125px;
 }
 
+form label:not(.checkbox) {
+  font-weight: bold;
+  font-size: 13.5px;
+}
+
 button.search-submit {
   border: none;
   background: none;
