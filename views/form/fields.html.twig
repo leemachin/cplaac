@@ -1,0 +1,39 @@
+{% block form_row %}
+{% spaceless %}
+  {{ form_label(form) }}
+  {{ form_errors(form) }}
+  {{ form_widget(form, {attr: { class: 'input-block-level'}}) }}
+  
+  <hr>
+{% endspaceless %}
+{% endblock form_row %}
+
+{% block choice_widget_expanded %}
+{% spaceless %}
+  <div {{ block('widget_container_attributes') }}>
+    {% for child in form %}
+      {{ form_widget(child) }}
+    {% endfor %}
+  </div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block checkbox_widget %}
+{% spaceless %}
+    <label for="{{ id }}" class="checkbox">
+      <input type="checkbox" {{ block('widget_attributes') }}
+        {% if value is defined %} value="{{ value }}"{% endif %}
+        {% if checked %} checked="checked"{% endif %}> {{ label|trans }}
+    </label>
+{% endspaceless %}
+{% endblock checkbox_widget %}
+
+{% block radio_widget %}
+{% spaceless %}
+    <label for="{{ id }}" class="checkbox">
+      <input type="radio" {{ block('widget_attributes') }}
+        {% if value is defined %} value="{{ value }}"{% endif %}
+        {% if checked %} checked="checked"{% endif %}> {{ label|trans }}
+    </label>
+{% endspaceless %}
+{% endblock radio_widget %}
