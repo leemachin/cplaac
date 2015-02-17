@@ -31,14 +31,12 @@
           {% set alerts = ['error', 'success', 'info', 'notice'] %}
 
           {% for alert in alerts %}
-            {% if app.session.hasFlash(alert) %}
-              <div class="alert alert-{{ alert }}">
-                <a class='close' data-dismiss='alert'>&times;</a>
-                {{ app.session.flash(alert)|raw }}
+            {% for message in app.session.flashbag.get(alert) %}
+              <div class="alert alert-{{alert}}">
+                {{ message }}
               </div>
-            {% endif %}
+            {% endfor %}
           {% endfor %}
-
         {% endblock %}
         
         {% block content %}{% endblock %}
