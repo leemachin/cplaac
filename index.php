@@ -90,12 +90,12 @@ $app['user'] = function() use ($app) {
   return $user;
 };
 
-$authenticateUser = function(Request $request) use ($app) {
+$app['requireAuth'] = $app->protect(function(Request $request) use ($app) {
   if (!$app['user']) {
     $app['session']->set('last_page', $app['current_page']);
     return new RedirectResponse('/login');
   }
-};
+});
 
 $app->get('/', function() use ($app) {
   return $app['twig']->render('index.twig');
