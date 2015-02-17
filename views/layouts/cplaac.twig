@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% if timed_redirect is defined %}
+      <meta http-equiv='refresh' content='2; url={{ timed_redirect }}'>
+    {% endif %}    
+
+    <link rel='stylesheet' href='/public/css/bootstrap.min.css' type='text/css'>
+    <link rel='stylesheet' href='/public/css/main.css' type='text/css'>
+
+    {% if stylesheets is not defined %} {% set stylesheets = [] %} {% endif %}
+    {% for style in stylesheets  %}
+      <link rel='stylesheet' href='{{ style }}' type='text/css'>
+    {% endfor %}
+
+    <link rel='stylesheet' href='/public/css/bootstrap-responsive.min.css' type='text/css'>
+    <title>CPLAAC</title>
+  </head>
+
+  {% if translucent is not defined %} {% set translucent = '' %} {% endif %}
+  <body class='{{ translucent }}'>
+    <div class='container-fluid {{ translucent }}'>
+      {% block nav %} {% include 'partials/nav.twig' %} {% endblock %}
+        
+        {% block breadcrumbs %}{% endblock %}
+
+        {% block flash %}
+          {% set alerts = ['error', 'success', 'info', 'notice'] %}
+
+          {% for alert in alerts %}
+            {% if app.session.hasFlash(alert) %}
+              <div class="alert alert-{{ alert }}">
+                <a class='close' data-dismiss='alert'>&times;</a>
+                {{ app.session.flash(alert)|raw }}
+              </div>
+            {% endif %}
+          {% endfor %}
+
+        {% endblock %}
+        
+        {% block content %}{% endblock %}
+      
+      {% block footer %} {% include 'partials/footer.html' %} {% endblock %}
+    </div>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+    <script src='/public/js/bootstrap.js'></script>
+
+    {% if javascripts is not defined %} {% set javascripts = [] %} {% endif %}
+    {% for script in javascripts %}
+      <script src='{{ script }}'></script>
+    {% endfor %}
+
+  </body>
+</html>

@@ -1,0 +1,69 @@
+{% macro input(label, name, value, class) %}
+  <div class='control-group'>
+    <label class='control-label' for='{{ name }}'>{{ label }}</label>
+    <div class='controls'>
+      <input type='text' class='{{ class }}' name='{{ name }}' value='{{ value }}'>
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro textarea(label, name, value, help, class) %}
+  <div class='control-group'>
+    <label for='{{ name }}'><strong>{{ label }}</strong></label>
+    <textarea name='{{ name }}' class='span12 {{ class }}' autocorrect>{{ value }}</textarea>
+
+    {% if help %}
+      <span class='help-block'>{{ help|raw }}</span>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro checkbox(label, name, value, class) %}
+  <div class='control-group'>
+    <div class='controls no-label'>
+      <label class='checkbox'>
+        <input type='checkbox' class='{{ class }}' name='{{ name }}' value='1' {{ value == 1 ? 'checked' : '' }}>
+        {{ label }}
+      </label>
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro yesno(label, name, class) %}
+  <div class='control-group'>
+    <label class='control-label'>{{ label }}</label>
+    <div class='controls'>
+      <label class='radio inline'><input type='radio' class='{{ class }}' name='{{ name }}' value='1'> yes</label>
+
+      <label class='radio inline'><input type='radio' class='{{ class }}' name='{{ name }}' value='0'> no</label>
+    </div>
+  </div>
+{% endmacro %}
+
+
+
+{% macro select(label, name, options, current_value, class) %}
+  <div class='control-group'>
+    <label class='control-label' for='{{ name }}'>{{ label }}</label>
+    <div class='controls'>
+      <select name='{{ name }}' class='{{ class }}'>
+        {% for name, value in options %}
+          {% if value == current_value or value == 'United Kingdom' %}
+            {% set selected = 'selected' %}
+          {% else %}
+            {% set selected = '' %}
+          {% endif %}
+          
+          <option value='{{ value }}' {{ selected }}>{{ name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro inline_save() %}
+  <div class='form-actions'>
+    <input type='submit' class='btn btn-primary btn-large' value='save changes'>
+    <input type='button' class='btn btn-secondary btn-large' value='cancel'>
+  </div>
+{% endmacro %}

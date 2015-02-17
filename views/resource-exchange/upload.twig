@@ -1,0 +1,60 @@
+{% extends 'layouts/resource-exchange.twig' %}
+
+{% set javascripts = [
+  '/public/js/chosen.jquery.min.js'
+, '/public/js/resource-exchange/upload.js'
+] %}
+
+{% set stylesheets = [
+  '/public/css/chosen.css'
+] %}
+
+{% block profile %}{% endblock %}
+
+{% block inner_content %}
+  
+  <h2>Share a new file</h2>
+
+  <form action='/exchange/upload' method='POST' enctype='multipart/form-data'>
+    <input type='hidden' name='user_id' value='{{ app.user.user_id }}'>
+    
+    <fieldset>
+      <legend>1. Pick your file</legend>      
+      
+      <div class='control-group'>
+        <input type='file' class='span8' name='resource'>
+        <p class='help-block'>Accepted file types: ...</p>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. Describe it</legend>
+
+      <div class='control-group'>
+        <textarea name='description' class='span8' title='Please enter a short description about this file' required></textarea>
+        <p class='help-block'>Enter a short description about this file, or what it's for.</p>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. Tag it</legend>
+
+      <div class='control-group'>
+        <input type='text' name='tags' class='span8' title='Please enter some tags to help identify this file.'>
+        <p class='help-block'>Enter a list of terms, separated by commas, to help identify this file. eg. <em>research, adoption, 2012</em></p>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>4. Send it</legend>
+
+      <div class='form-actions'>
+        <input type='submit' class='btn btn-primary btn-large' value='Upload'>
+        <input type='reset' class='btn btn-secondary' value='Cancel'>
+      </div>
+    </fieldset>
+
+
+  </form>
+
+{% endblock %}

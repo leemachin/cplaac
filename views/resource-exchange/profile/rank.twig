@@ -1,0 +1,36 @@
+{% extends 'layouts/resource-exchange.twig' %}
+
+{% block profile_text %}
+  Your rank is a measure of how much you share, and how useful other people think those resources are. The more you share, the more you score!
+{% endblock %}
+
+{% block inner_content %}
+
+  <div id='stats'>
+    <h1>my share rank</h1>
+    <hr>    
+    <div class='row-fluid'>
+      <div class='span4'></div>
+
+      <div class='span4'>
+        {% set rank = app.user.getRank.overall_rank %}
+        <span class='rank'>{{ rank ? Maths.ordinal(rank)|raw : 'n/a' }}</span>
+      </div>
+
+      <div class='span4'>
+      </div>
+    </div>
+  </div>
+
+  <div class='row-fluid'>
+    <div class='span6'>
+      <h3>How is this calculated?</h3>
+      <p>Your share rank is calculated from a small number of weighted metrics that are later combined into an overall score. This is done primarily to ensure members are still rewawrded for their best contributions long after the time they first shared them.</p>
+    </div>
+
+    <div class='span6'>
+      <h3>What is it based on?</h3>
+      <p>Your share rank is based on how much you share <strong>and</strong> how many people download what you share. These will be used to determine how relevant your individual contributions are, relative to the overall popularity and usage of the system. </p>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{# this layout is for things like login screens, that need to be minimal #}
+
+{% extends 'layouts/cplaac.twig' %}
+
+{% set stylesheets = ['/public/css/minimal.css'] %}
+
+{% block content %}
+
+  <div class='row-fluid'>
+    <!-- empty div to centre the content element -->
+    <div class='span4'></div>
+
+    <div class='content span4'>
+
+      <!-- <div class='page-logo'>
+        <img src='/public/img/logo-cplaac.png'>
+      </div> -->
+
+      <div class='well content-inner'>
+      {% block inner_content %}
+
+      {% endblock %}
+      </div>
+    </div>
+
+    <!-- same deal as before -->
+    <div class='span4'></div>
+  </div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

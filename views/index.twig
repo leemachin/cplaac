@@ -1,0 +1,53 @@
+{% extends 'layouts/cplaac.twig' %}
+
+{% set translucent = 'translucent' %}
+
+{% block content %}
+  <div class='alert alert-info' style='margin-top: 20px'>
+    <strong>Looking for BERRI?</strong> You can now find it at <a href="http://berri.org.uk">http://berri.org.uk</a>.
+  </div>
+
+  <!-- 'hero unit', big attention grabber -->
+  <div class='hero-unit masthead'>
+    <!-- the call to action -->      
+    <div class='inner'>
+      <img src='/public/img/logo-cplaac.png'>
+      <h2><small>Clinical Psychologists working with Looked After and Adopted Children</small></h2>
+      <p>We are an organisation of <strong>Clinical Psychologists</strong> concerned with the welfare of looked after and adopted children.<br> We offer a place to discuss topics of concern, the ability to share helpful files, and a directory of services concerned with looked after children.</p>
+      <a class='btn btn-primary btn-large' href='/forum'>Join the community!</a> 
+      <a class='btn btn-secondary btn-large' href='/about'>Tell me more...</a>
+    </div>
+  </div>
+
+  <!-- this is an overview of what you can do on the site -->
+  <div class='row-fluid'>
+    <div class='span4 clearfix'>
+      <h2 class='center-header'>Forum <small>engage the community</small></h2>
+      <p>Discuss topics related to clinical psychology and adopted and looked after children amongst a community of like-minded peers. <strong>Registration is free</strong> and we welcome new members.</p>
+    </div>
+
+    <div class='span4 clearfix'>
+      <h2 class='center-header'>Resource Exchange <small>share files</small></h2>
+      <p>Registered members can upload relevant resources to CPLAAC, which can then be shared amongst peers. You can also download the resources other members have shared.</p>
+    </div>
+
+    <div class='span4 clearfix'>
+      <h2 class='center-header'>Directory <small>find LAC services</small></h2>
+      <p>You don't have to be registered to browse and search the directory, which contains contact details and addresses of LAC services across the country. Becoming a member allows you to update the directory.</p>
+    </div>
+  </div>
+
+  <div class='row-fluid action-buttons'>
+    <div class='span4 clearfix'>
+      <a class='btn btn-info btn-right' href='/forum'><i class='icon-comment icon-white'></i> join the forum</a>
+    </div>
+
+    <div class='span4 clearfix'>
+      <a class='btn btn-info btn-right' href='/exchange'><i class='icon-random icon-white'></i> share resources</a>
+    </div>
+
+    <div class='span4 clearfix'>
+      <a class='btn btn-info btn-right' href='/directory.php'><i class='icon-th-list icon-white'></i> go to directory</a>
+    </div>
+  </div>
+{% endblock %}

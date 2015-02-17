@@ -1,0 +1,23 @@
+{% macro file_list(files) %}
+  <table class='table table-striped'>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Tags</th>
+        <th>Downloads</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for file in files %}
+        <tr>
+          <td><a href='/exchange/download/{{file.filename}}'>{{ file.real_filename }}</a></td>
+          <td>{{ file.description }}</td>
+          <td>{{ file.tags }}</td>
+          <td>{{ file.downloads }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endmacro %}

@@ -1,0 +1,117 @@
+body {
+  padding-top: 40px;
+}
+
+body.translucent {
+  background-image: url(/public/img/licensed/baby-hold.jpg);
+  background-repeat: no-repeat;
+  background-position: top center;  
+}
+
+div.translucent {
+  background-color: rgba(255, 255, 255, 0.65);
+}
+
+.masthead.hero-unit {
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.masthead.hero-unit .inner {
+  padding: 20px 180px;
+  text-align: center;
+}
+
+.action-buttons {
+  padding-bottom: 20px;
+}
+
+.center-header {
+  border-bottom: 1px solid #eeeeee;
+  margin-bottom: 9px;
+}
+
+.btn-right {
+ float: right;
+}
+
+footer { 
+  margin: 40px 0 20px 0;
+  border-top: 1px solid #eeeeee;
+  padding-top: 10px;
+}
+
+footer ul.logos {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+}
+
+footer ul.logos li {
+  display: inline-block;
+  margin-right: 25px;
+}
+
+footer ul.logos li a {
+  text-decoration: none;
+}
+
+footer ul.logos li a img {
+  padding-right: 5px;
+}
+
+span.person-graphic {
+  display: block;
+}
+
+td.bool {
+  text-align: center;
+}
+
+td.bool.yes,
+tr:hover td.bool.yes {
+  background-color: #5bb75b;
+}
+
+td.bool.no,
+tr:hover td.bool.no {
+  background-color: #da4f49;
+}
+
+textarea {
+  height: 125px;
+}
+
+button.search-submit {
+  border: none;
+  background: none;
+  float: right;
+  margin-top: -25px;
+}
+
+p.large {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 22.5px;
+}
+
+p.sexy {
+  font-size: 15px;
+  font-weight: 300;
+}
+
+#stats {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+#stats span.rank {
+  display: inline-block;
+  margin-top: 24px;
+  font-size: 44px;
+  font-weight: 300;
+}
+
+.points {
+  text-align: center;
+}

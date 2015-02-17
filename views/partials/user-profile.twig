@@ -1,0 +1,16 @@
+{% if app.user %}    
+  <div class='btn-group pull-right'>
+    <a href='#' class='btn dropdown-toggle' id='user-profile' data-toggle='dropdown'>
+      <i class='icon-user'></i> {{ app.user.username }}
+      <b class='caret'></b>
+    </a>
+
+    <ul class='dropdown-menu'>   
+      <li><a href='/logout'>log out</a>
+    </ul>
+  </div>
+{% else %}
+  <div class='btn-group pull-right'>
+    <a href='/login' class='btn'><i class='icon-user'></i> log in</a><a href='/signup' class='btn'><i class='icon-share-alt'></i> sign up</a>
+  </div>
+{% endif %}

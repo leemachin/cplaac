@@ -1,0 +1,27 @@
+{% extends 'layouts/resource-exchange.twig' %}
+
+{% block profile %}{% endblock %}
+
+{% block inner_content %}
+
+  <table class='table table-striped'>
+    <thead>
+      <tr>
+        <th>Position</th>
+        <th>User</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for rank in ranks %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ rank.user }}</td>
+          <td>{{ rank.points }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}

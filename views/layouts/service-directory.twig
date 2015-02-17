@@ -1,0 +1,15 @@
+{% extends 'layouts/cplaac.twig' %}
+
+{% block content %}
+  <div class='page-header'>
+    <h1>Service Directory <small>discover local services within your area</small></h1>
+  </div>
+
+  <div class='row-fluid'>  
+    <div class='span1'></div>     
+    <div class='span10'>
+      {% block inner_content %}{% endblock %}
+    </div>
+    <div class='span1'></div>
+  </div>
+{% endblock %}

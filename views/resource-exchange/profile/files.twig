@@ -1,0 +1,24 @@
+{% extends 'layouts/resource-exchange.twig' %}
+{% import 'macros/tables.twig' as tables %}
+
+{% block profile_title %} 
+  My {{ type }} 
+{% endblock %}
+
+{% block profile_text %}
+  {% if type == 'Uploads' %}
+    This is a list of all the files you've uploaded and shared with other people. You can see how many times a file has been downloaded, and also re-download the files if you need to.
+  {% else %}
+    This is a list of all the files you've downloaded. You can re-download them as many times as you like.
+  {% endif %}
+{% endblock %}
+
+{% block inner_content %}
+  {% if files %}
+    {{ tables.file_list(files) }}
+  {% else %}
+    <div class='alert alert-info'>
+      <strong>Nothing to see here!</strong> You haven't downloaded anything from the resource exchange yet.
+    </div>
+  {% endif %}
+{% endblock %}
