@@ -52,8 +52,6 @@ if (isset($app['config']['app']['session_path'])) {
 $app->register(new Silex\Provider\SessionServiceProvider(), $session_config);
 $app['session']->start();
 
-$app['autoloader']->registerNamespace('Cplaac', __DIR__.'/lib');
-
 $app['twig']->addGlobal('Maths', new Cplaac\TwigExtensions\Maths());
 $app['twig']->addGlobal('Filters', new Cplaac\TwigExtensions\Filters());
 
