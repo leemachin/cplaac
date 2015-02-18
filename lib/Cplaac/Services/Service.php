@@ -2,18 +2,16 @@
 
 namespace Cplaac\Services;
 
-use Cplaac\Core\Entity;
+class Service {
 
-class Service extends Entity {
-
-  protected $service_name,
-            $address,
-            $contact_name,
-            $contact_phone,
-            $contact_email,
-            $additional_info;
-
-  protected $table_name = "cplaac_services";
+  public $id,
+         $user_id,
+         $service_name,
+         $address,
+         $contact_name,
+         $contact_phone,
+         $contact_email,
+         $additional_info;
 
   const CLIENT_GROUPS = [
     'Children in residential homes',
@@ -45,12 +43,135 @@ class Service extends Entity {
     'Liaison between agencies'
   ];
 
-  public function isValid() {
+  public function __construct($db, $user = null, $data) {
+    $this->db = $db;
 
+    $this->id = $data['id'] ?: null;
+    $this->user_id = $data['user_id'] || $user['user_id'];
+    $this->service_name = $data['service_name'];
+    $this->address = $data['address'];
+    $this->contact_name = $data['contact_name'];
+    $this->contact_phone = $data['contact_phone'];
+    $this->contact_email = $data['contact_email'];
+
+    if (!$data['id']) {
+      $this->additional_info = json_encode($data['additional_info']);
+    } else {
+      $this->additional_info = $data['additional_info']; 
+    }
   }
 
   public function additional_info() {
-    return json_decode($this->additional_info);
+    $info = json_decode($this->additional_info, true);
+    
+    $info['client_groups'] = array_map(function($id) {
+      return self::CLIENT_GROUPS[$id];
+    }, $info['client_groups']);
+
+    $info['services_offered'] = array_map(function($id) {
+      return self::SERVICES_OFFERED[$id];
+    }, $info['services_offered']);
+
+    return $info;
+  }
+
+  public function save() {
+    $query = $this->db->createQueryBuilder();
+
+    if ($this->exists()) {
+      $query
+        ->update('cplaac_services')
+        ->set('service_name', '?')
+        ->set('address', '?')
+        ->set('contact_name', '?')
+        ->set('contact_phone', '?')
+        ->set('contact_email', '?')
+        ->set('additional_info', '?')
+        ->where('id = ? AND user_id = ?');
+
+      $query->setParameters([
+        $this->service_name,
+        $this->address,
+        $this->contact_name,
+        $this->contact_phone,
+        $this->contact_email,
+        $this->additional_info,
+        $this->id,
+        $this->user_id
+      ]);
+    } else {
+      $query->insert('cplaac_services');
+      $query->values([
+        'user_id' => '?',
+        'service_name' => '?',
+        'address' => '?',
+        'contact_name' => '?',
+        'contact_phone' => '?',
+        'contact_email' => '?',
+        'additional_info' => '?'
+      ]);
+      $query->setParameters([
+        $this->user_id,
+        $this->service_name,
+        $this->address,
+        $this->contact_name,
+        $this->contact_phone,
+        $this->contact_email,
+        $this->additional_info
+      ]);
+    }
+
+    $result = $query->execute();
+
+    if ($result && !$this->exists()) {
+      $this->id = $this->db->lastInsertId();
+    }
+
+    return $result;
+  }
+
+  public function update($data) {
+    $this->service_name = $data['service_name'];
+    $this->address = $data['address'];
+    $this->contact_name = $data['contact_name'];
+    $this->contact_phone = $data['contact_phone'];
+    $this->contact_email = $data['contact_email'];
+    $this->additional_info = json_encode($data['additional_info']);
+  }
+
+  public function exists() {
+    return (bool) $this->id;
+  }
+
+  public static function findById($db, $id) {
+    $query = $db->createQueryBuilder();
+    $query
+      ->select('*')
+      ->from('cplaac_services')
+      ->where('id = :id')
+      ->setParameter('id', $id);
+
+    $result = $query->execute()->fetch();
+
+    if ($result) {
+      return new static($db, null, $result);
+    }
+  }
+
+  public static function findAll($db) {
+    $query = $db->createQueryBuilder();
+    $query
+      ->select('*')
+      ->from('cplaac_services');
+
+    $results = $query->execute()->fetchAll();
+    $services = [];
+
+    foreach ($results as $result) {
+      $services[] = new static($db, null, $result);
+    }
+
+    return $services;
   }
 
 }
