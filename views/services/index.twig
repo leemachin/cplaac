@@ -5,6 +5,14 @@
     <h1>Service Directory</h1>
   </div>
 
+  {% if app.user %}
+    <div class='row-fluid'>
+      <div class="span3 offset9">
+        <a class="btn btn-primary" href="/services/new">Add Service</a>
+      </div>
+    </div>
+  {% endif %}
+
   <div class='row-fluid'>
     <table class="table table-striped table-hover">
       <thead>
