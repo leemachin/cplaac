@@ -17,8 +17,9 @@ class Auth {
   /**
    * Inject a database instance into the class.
    */
-  public function __construct($config, $user, $auth) {
+  public function __construct($config, $profile, $user, $auth) {
     $this->config = $config;
+    $this->profile = $profile;
     $this->user = $user;  
     $this->auth = $auth;
   }
@@ -48,5 +49,12 @@ class Auth {
  
   public function userLoggedIn() {
     return $this->user_data !== false || $this->user->data['user_id'] != 1;
+  }
+
+  public function setServiceAdded() {
+    return $this->profile->update_profile_field_data(
+      $this->getUserData()->user_id,
+      ['service_added' => true]
+    );
   }
 }

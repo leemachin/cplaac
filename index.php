@@ -25,6 +25,7 @@ define('IN_PHPBB', true);
 $phpbb_root_path = $app['config']['forum']['path'];
 $phpEx = substr(strrchr(__FILE__, '.'), 1);
 include($phpbb_root_path . 'common.' . $phpEx);
+include($phpbb_root_path . 'includes/functions_profile_fields.' . $phpEx);
 // $user and $auth come from that file
 $user->session_begin();
 $auth->acl($user->data);
@@ -92,7 +93,7 @@ $app['api'] = $app->share(function() use ($app) {
 });
 
 $app['auth'] = $app->share(function() use ($app, $user, $auth) {
-  return new Cplaac\Core\Auth($app['config']['forum'], $user, $auth);
+  return new Cplaac\Core\Auth($app['config']['forum'], new custom_profile(), $user, $auth);
 });
 
 $app['user'] = function() use ($app) {

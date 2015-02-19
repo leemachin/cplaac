@@ -84,6 +84,7 @@ class ServicesControllerProvider implements ControllerProviderInterface {
         $service->user_id = $app['user']->user_id;
 
         if ($service->save()) {
+          $app['auth']->setServiceAdded();
           return $app->redirect('/services');
         }
       } else {
