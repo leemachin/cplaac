@@ -54,7 +54,7 @@ class Auth {
   public function setServiceAdded() {
     return $this->profile->update_profile_field_data(
       $this->getUserData()->user_id,
-      ['service_added' => true]
+      $fields = ['pf_serviceadded' => true] // pass by reference...
     );
   }
 }
