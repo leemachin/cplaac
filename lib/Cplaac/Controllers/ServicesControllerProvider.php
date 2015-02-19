@@ -21,6 +21,48 @@ class ServicesControllerProvider implements ControllerProviderInterface {
         'services' => $services
       ]);
     });
+    
+    $services->post('/', function(Request $request) use ($app) {
+      $form = $this->createForm($app);
+      $form->handleRequest($request);
+
+      if ($form->isValid()) {
+        $service = new Service($app['db'], $form->getData());
+        $service->user_id = $app['user']->user_id;
+
+        if ($service->save()) {
+          $app['auth']->setServiceAdded();
+          return $app->redirect('/services');
+        }
+      } else {
+        return $app['twig']->render('services/new.twig', [
+          'form' => $form->createView()
+        ]);
+      }
+    })->before($app['requireAuth']);
+
+    $services->post('/{id}', function(Request $request, $id) use ($app) {
+      $service = Service::findById($app['db'], $id);
+
+      if (!$service) {
+        return $app->abort(404, "Service not found");
+      }
+
+      $form = $this->createForm($app);
+      $form->handleRequest($request);
+
+      if ($form->isValid()) {
+        $service->update($form->getData()); 
+
+        if ($service->save()) {
+          return $app->redirect('/services');
+        }
+      } else {
+        return $app['twig']->render('services/new.twig', [
+          'form' => $form->createView()
+        ]);
+      }
+    })->assert('id', '\d+');
 
     $services->get('/new', function() use ($app) {
       $form = $this->createForm($app);
@@ -51,48 +93,6 @@ class ServicesControllerProvider implements ControllerProviderInterface {
         'form' => $form->createView()
       ]);
     })->assert('id', '\d+');
-
-    $services->post('/{id}', function(Request $request, $id) use ($app) {
-      $service = Service::findById($app['db'], $id);
-
-      if (!$service) {
-        return $app->abort(404, "Service not found");
-      }
-
-      $form = $this->createForm($app);
-      $form->handleRequest($request);
-
-      if ($form->isValid()) {
-        $service->update($form->getData()); 
-
-        if ($service->save()) {
-          return $app->redirect('/services');
-        }
-      } else {
-        return $app['twig']->render('services/new.twig', [
-          'form' => $form->createView()
-        ]);
-      }
-    })->assert('id', '\d+');
-
-    $services->post('/', function(Request $request) use ($app) {
-      $form = $this->createForm($app);
-      $form->handleRequest($request);
-
-      if ($form->isValid()) {
-        $service = new Service($app['db'], $form->getData());
-        $service->user_id = $app['user']->user_id;
-
-        if ($service->save()) {
-          $app['auth']->setServiceAdded();
-          return $app->redirect('/services');
-        }
-      } else {
-        return $app['twig']->render('services/new.twig', [
-          'form' => $form->createView()
-        ]);
-      }
-    })->before($app['requireAuth']);
 
     return $services;
   }
