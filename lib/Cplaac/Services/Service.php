@@ -43,11 +43,11 @@ class Service {
     'Liaison between agencies'
   ];
 
-  public function __construct($db, $user = null, $data) {
+  public function __construct($db, $data) {
     $this->db = $db;
 
     $this->id = $data['id'] ?: null;
-    $this->user_id = $data['user_id'] || $user['user_id'];
+    $this->user_id = $data['user_id'] ?: null;
     $this->service_name = $data['service_name'];
     $this->address = $data['address'];
     $this->contact_name = $data['contact_name'];
@@ -154,7 +154,7 @@ class Service {
     $result = $query->execute()->fetch();
 
     if ($result) {
-      return new static($db, null, $result);
+      return new static($db, $result);
     }
   }
 
@@ -168,7 +168,7 @@ class Service {
     $services = [];
 
     foreach ($results as $result) {
-      $services[] = new static($db, null, $result);
+      $services[] = new static($db, $result);
     }
 
     return $services;

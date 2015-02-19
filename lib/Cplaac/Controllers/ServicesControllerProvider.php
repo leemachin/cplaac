@@ -80,7 +80,8 @@ class ServicesControllerProvider implements ControllerProviderInterface {
       $form->handleRequest($request);
 
       if ($form->isValid()) {
-        $service = new Service($app['db'], $app['user'], $form->getData());
+        $service = new Service($app['db'], $form->getData());
+        $service->user_id = $app['user']->user_id;
 
         if ($service->save()) {
           return $app->redirect('/services');
