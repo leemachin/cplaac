@@ -3,6 +3,9 @@
 {% block content %}
   <div class='page-header'>
     <h1>{{ service.service_name }}</h1>
+    {% if app.user %}
+      <a href="/services/{{ service.id }}/edit" class="btn btn-info pull-right">Edit</a>
+    {% endif %}
   </div>
 
   <div class='row-fluid'>
