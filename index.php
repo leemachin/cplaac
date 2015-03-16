@@ -118,7 +118,7 @@ $app->get('/', function() use ($app) {
 });
 
 $app->get('/signup', function() use ($app) {
-  return $app->redirect('/forum/profile.php?mode=register');
+  return $app->redirect('/forum/ucp.php?mode=register');
 });
 
 $app->get('/login', function() use ($app) {
